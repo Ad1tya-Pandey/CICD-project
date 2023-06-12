@@ -28,19 +28,6 @@ pipeline {
         }
       }
     }
-    stage('Test Credentials') {
-    steps {
-        script {
-            def dockerCred = credentials('docker-credential')
-            if (dockerCred) {
-                echo "Username: ${dockerCred.username}"
-                echo "Password: ${dockerCred.password}"
-            } else {
-                error "Unable to retrieve Docker credentials."
-            }
-        }
-    }
-}
 
     stage('Build and Push Docker Image') {
       environment {
