@@ -28,6 +28,20 @@ pipeline {
         }
       }
     }
+    stage('Test Credentials') {
+    steps {
+        script {
+            def dockerCred = credentials('docker-cred')
+            if (dockerCred) {
+                echo "Username: ${dockerCred.username}"
+                echo "Password: ${dockerCred.password}"
+            } else {
+                error "Unable to retrieve Docker credentials."
+            }
+        }
+    }
+}
+
     stage('Build and Push Docker Image') {
       environment {
         DOCKER_IMAGE = "ad1tyapandey/ultimate-cicd:${BUILD_NUMBER}"
